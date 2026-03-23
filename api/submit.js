@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, role, country } = req.body;
+  const { name, email, role, country, ambassador } = req.body;
 
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
@@ -26,8 +26,6 @@ export default async function handler(req, res) {
         created_at  TIMESTAMPTZ DEFAULT NOW()
       )
     `;
-
-    const { name, email, role, country, ambassador } = req.body;
 
     await sql`
       INSERT INTO paisley_leads (name, email, role, country, ambassador)
