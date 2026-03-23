@@ -4,10 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Paisley | Get Paid Before You Work</title>
-  <meta name="description" content="Paisley lets freelancers sell future hours as Time Credits, get paid upfront, and keep more of what they earn. Join the early access list." />
+  <meta
+    name="description"
+    content="Paisley lets freelancers sell future hours as Time Credits, get paid upfront, and keep more of what they earn. Join the early access list."
+  />
   <link rel="icon" type="image/svg+xml" href="assets/logos/favicon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Source+Sans+Pro:wght@400;600&display=swap"
+    rel="stylesheet"
+  >
   <style>
     :root {
       --paisley-primary: #231F56;
@@ -16,37 +22,168 @@
       --paisley-subtext: #6A54A3;
       --paisley-soft: #F9F9FB;
     }
-    body { font-family: 'Source Sans Pro', sans-serif; color: var(--paisley-primary); background: #ffffff; }
-    h1, h2, h3, h4, button, nav, .ibm { font-family: 'IBM Plex Sans', sans-serif; }
-    .shell { max-width: 1200px; margin: 0 auto; }
-    .card { background: #fff; border: 1px solid #ececf4; border-radius: 1.25rem; box-shadow: 0 12px 30px rgba(35,31,86,.07); }
-    .soft-card { background: var(--paisley-soft); border: 1px solid #ececf4; border-radius: 1.25rem; }
-    .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; }
-    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .three-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-    .four-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-    .two-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-    .email-input { border: 2px solid #e8e8f2; border-radius: 999px; padding: 1rem 1.1rem; font-size: 1rem; width: 100%; }
-    .email-input:focus { outline: none; border-color: var(--paisley-teal); box-shadow: 0 0 0 4px rgba(11,169,194,.12); }
-    .btn-primary { background: var(--paisley-primary); color: #fff; border-radius: 999px; padding: 1rem 1.4rem; font-weight: 700; }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      color: var(--paisley-primary);
+      background: #ffffff;
+    }
+
+    h1, h2, h3, h4, button, nav, .ibm {
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ececf4;
+      border-radius: 1.25rem;
+      box-shadow: 0 12px 30px rgba(35,31,86,.07);
+    }
+
+    .soft-card {
+      background: var(--paisley-soft);
+      border: 1px solid #ececf4;
+      border-radius: 1.25rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 2rem;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .four-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .two-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .email-input {
+      border: 2px solid #e8e8f2;
+      border-radius: 999px;
+      padding: 1rem 1.1rem;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    .email-input:focus {
+      outline: none;
+      border-color: var(--paisley-teal);
+      box-shadow: 0 0 0 4px rgba(11,169,194,.12);
+    }
+
+    .btn-primary {
+      background: var(--paisley-primary);
+      color: #fff;
+      border-radius: 999px;
+      padding: 1rem 1.4rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .btn-primary:hover { opacity: .95; }
-    .btn-accent { background: var(--paisley-accent); color: var(--paisley-primary); border-radius: 999px; padding: 1rem 1.4rem; font-weight: 700; }
-    .pill { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; padding: .45rem .8rem; background: rgba(11,169,194,.08); color: var(--paisley-primary); font-weight: 600; }
-    .small { font-size: .95rem; color: var(--paisley-subtext); }
-    .faq details { background:#fff; border:1px solid #ececf4; border-radius: 1rem; padding: 1.25rem 1.25rem; }
-    .faq summary { cursor:pointer; list-style:none; font-weight:700; color:var(--paisley-primary); }
-    .faq summary::-webkit-details-marker { display:none; }
-    .faq details p { color:#504b78; margin-top:.85rem; }
-    .sticky-cta { position: sticky; bottom: 1rem; z-index: 30; }
+
+    .btn-accent {
+      background: var(--paisley-accent);
+      color: var(--paisley-primary);
+      border-radius: 999px;
+      padding: 1rem 1.4rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border-radius: 999px;
+      padding: .45rem .8rem;
+      background: rgba(11,169,194,.08);
+      color: var(--paisley-primary);
+      font-weight: 600;
+    }
+
+    .small {
+      font-size: .95rem;
+      color: var(--paisley-subtext);
+    }
+
+    .faq details {
+      background: #fff;
+      border: 1px solid #ececf4;
+      border-radius: 1rem;
+      padding: 1.25rem 1.25rem;
+    }
+
+    .faq summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: var(--paisley-primary);
+    }
+
+    .faq summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq details p {
+      color: #504b78;
+      margin-top: .85rem;
+    }
+
+    .sticky-cta {
+      position: sticky;
+      bottom: 1rem;
+      z-index: 30;
+    }
+
     @media (max-width: 992px) {
-      .hero-grid, .metric-grid, .three-grid, .four-grid, .two-grid { grid-template-columns: 1fr; }
+      .hero-grid,
+      .metric-grid,
+      .three-grid,
+      .four-grid,
+      .two-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <header class="shell px-4 lg:px-8 pt-8 pb-6">
     <nav class="flex items-center justify-between gap-4">
-      <img src="assets/logos/paisley-wordmark.svg" alt="Paisley" class="h-12 md:h-14 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/180x48/231F56/CAD22C?text=PAISLEY';">
+      <img
+        src="assets/logos/paisley-wordmark.svg"
+        alt="Paisley"
+        class="h-12 md:h-14 w-auto"
+        onerror="this.onerror=null;this.src='https://placehold.co/180x48/231F56/CAD22C?text=PAISLEY';"
+      >
       <a href="#early-access" class="btn-primary text-sm md:text-base">Get Early Access</a>
     </nav>
   </header>
@@ -56,32 +193,40 @@
       <div class="hero-grid items-start">
         <div>
           <div class="pill mb-5">Prelaunch • Early Access for Freelancers and Creators</div>
+
           <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6" style="color:#231F56;">
             Get Paid <span style="color:#0BA9C2;">Before</span> You Work
           </h1>
+
           <p class="text-xl md:text-2xl max-w-3xl mb-6" style="color:#6A54A3;">
             Turn your future hours into income today. No invoices. No waiting. No platform cuts.
           </p>
+
           <div class="flex flex-wrap gap-3 mb-8">
-            <div class="pill">No invoice chasing</div>
-            <div class="pill">No platform tax</div>
+            <div class="pill">Get paid upfront</div>
+            <div class="pill">Keep more of what you earn</div>
             <div class="pill">Built for global work</div>
           </div>
+
           <div class="soft-card p-5 md:p-6 max-w-3xl">
-            <p class="ibm text-lg font-bold mb-3" style="color:#231F56;">What this unlocks</p>
+            <p class="ibm text-lg font-bold mb-2" style="color:#231F56;">What this unlocks</p>
             <div class="space-y-3 text-lg" style="color:#504b78;">
-              <p>Get paid upfront instead of waiting 30 days.<br>Build predictable income instead of chasing invoices.</p>
-              <p>A freelancer charging <strong style="color:#231F56;">$75/hour</strong> can mint months of work and get paid now. At just <strong style="color:#231F56;">10,000 freelancers</strong>, that represents <strong style="color:#231F56;">$750M</strong> flowing through the network.</p>
-              <p>Because Paisley is a cooperative, that value doesn't leave. <strong style="color:#231F56;">It stays with members.</strong></p>
-              <div class="space-y-1">
-                <p>That means we can build more together:</p>
-                <ul class="space-y-1 ml-4">
-                  <li>• access to capital and advances</li>
-                  <li>• better financial tools</li>
-                  <li>• shared growth across the network</li>
-                </ul>
-              </div>
-              <p style="color:#231F56; font-weight:600;">This is more than getting paid faster.<br>It's becoming part of something bigger.</p>
+              <p>
+                Get paid upfront instead of waiting 30 days. Build predictable income instead of chasing invoices.
+              </p>
+              <p>
+                A freelancer charging <strong>$75/hour</strong> can mint months of work and get paid now. At just
+                <strong>10,000 freelancers</strong>, that represents <strong>$750M</strong> flowing through the network.
+              </p>
+              <p>
+                Because Paisley is a cooperative, that value does not leave. It stays with members.
+              </p>
+              <p>
+                That means we can build more together: access to capital, better financial tools, and shared growth across the network.
+              </p>
+              <p>
+                This is more than getting paid faster. It is becoming part of something bigger.
+              </p>
             </div>
           </div>
         </div>
@@ -89,17 +234,21 @@
         <div id="early-access" class="card p-6 md:p-8">
           <p class="ibm text-sm font-bold uppercase tracking-wide mb-2" style="color:#0BA9C2;">Join the waitlist</p>
           <h2 class="text-3xl font-extrabold mb-3" style="color:#231F56;">Get early access</h2>
-          <p class="small mb-6">Be first to mint Time Credits, claim your Paisley ID, and help shape the launch.</p>
+          <p class="small mb-6">
+            Be first to mint Time Credits, claim your Paisley ID, and help shape the launch.
+          </p>
 
           <form id="main-form" class="space-y-4">
             <div>
               <label class="block ibm text-sm font-semibold mb-2" for="name">Name</label>
               <input id="name" name="name" type="text" class="email-input" placeholder="Your name" required />
             </div>
+
             <div>
               <label class="block ibm text-sm font-semibold mb-2" for="email">Email</label>
               <input id="email" name="email" type="email" class="email-input" placeholder="you@example.com" required />
             </div>
+
             <div>
               <label class="block ibm text-sm font-semibold mb-2" for="role">What best describes you?</label>
               <select id="role" name="role" class="email-input">
@@ -111,10 +260,12 @@
                 <option>Country Ambassador</option>
               </select>
             </div>
+
             <div>
               <label class="block ibm text-sm font-semibold mb-2" for="country">Country</label>
               <input id="country" name="country" type="text" class="email-input" placeholder="Your country" />
             </div>
+
             <button type="submit" class="btn-accent w-full text-lg">Join Early Access</button>
           </form>
 
@@ -124,7 +275,9 @@
           </div>
 
           <div class="mt-5 pt-5 border-t border-slate-200">
-            <p class="small"><strong>Early access includes:</strong> first wallet access, first minting access, launch updates, and ambassador opportunities.</p>
+            <p class="small">
+              <strong>Early access includes:</strong> first wallet access, first minting access, launch updates, and ambassador opportunities.
+            </p>
           </div>
         </div>
       </div>
@@ -135,6 +288,7 @@
         <h2 class="text-4xl font-extrabold mb-4">How it works</h2>
         <p class="text-xl" style="color:#6A54A3;">Simple. Fast. Built for freelancers.</p>
       </div>
+
       <div class="four-grid">
         <div class="soft-card p-6">
           <h3 class="text-xl font-bold mb-2">1. Set your rate</h3>
@@ -160,46 +314,25 @@
         <div class="card p-6">
           <p class="ibm text-sm font-bold uppercase mb-2" style="color:#0BA9C2;">Core mechanic</p>
           <h3 class="text-2xl font-bold mb-2">Sell future hours</h3>
-          <p style="color:#504b78;">Time Credits let freelancers package future work and get paid before delivery.</p>
+          <p style="color:#504b78;">
+            Time Credits let freelancers package future work and get paid before delivery.
+          </p>
         </div>
+
         <div class="card p-6">
           <p class="ibm text-sm font-bold uppercase mb-2" style="color:#0BA9C2;">Worker benefit</p>
           <h3 class="text-2xl font-bold mb-2">Predictable cash flow</h3>
-          <p style="color:#504b78;">Replace slow payouts and invoice anxiety with upfront income and a stronger reputation trail.</p>
+          <p style="color:#504b78;">
+            Replace slow payouts and invoice anxiety with upfront income and a stronger reputation trail.
+          </p>
         </div>
-        <div class="card p-6">
-          <p class="ibm text-sm font-bold uppercase mb-2" style="color:#0BA9C2;">Business model</p>
-          <h3 class="text-2xl font-bold mb-2">Aligned with members</h3>
-          <p style="color:#504b78;">Membership, premium tools, payments, and settlement services power the network.</p>
-        </div>
-      </div>
-    </section>
 
-    <section class="shell px-4 lg:px-8 py-14">
-      <div class="text-center max-w-3xl mx-auto mb-10">
-        <h2 class="text-4xl font-extrabold mb-4">How Paisley works</h2>
-        <p class="text-xl" style="color:#6A54A3;">Simple enough for a freelancer to understand in seconds. Strong enough for an investor to see the scale.</p>
-      </div>
-      <div class="four-grid">
-        <div class="soft-card p-6">
-          <div class="ibm text-5xl font-extrabold mb-3" style="color:#CAD22C;">1</div>
-          <h3 class="text-xl font-bold mb-2">Set your rate</h3>
-          <p style="color:#504b78;">Start with the way freelancers already price work: by the hour or by the package.</p>
-        </div>
-        <div class="soft-card p-6">
-          <div class="ibm text-5xl font-extrabold mb-3" style="color:#CAD22C;">2</div>
-          <h3 class="text-xl font-bold mb-2">Mint Time Credits</h3>
-          <p style="color:#504b78;">Create prepaid units of future work that clients can purchase before delivery begins.</p>
-        </div>
-        <div class="soft-card p-6">
-          <div class="ibm text-5xl font-extrabold mb-3" style="color:#CAD22C;">3</div>
-          <h3 class="text-xl font-bold mb-2">Get paid upfront</h3>
-          <p style="color:#504b78;">Clients buy credits now. You receive income now. Work is delivered over time.</p>
-        </div>
-        <div class="soft-card p-6">
-          <div class="ibm text-5xl font-extrabold mb-3" style="color:#CAD22C;">4</div>
-          <h3 class="text-xl font-bold mb-2">Build reputation</h3>
-          <p style="color:#504b78;">Redemptions and reviews strengthen trust and help the best freelancers stand out.</p>
+        <div class="card p-6">
+          <p class="ibm text-sm font-bold uppercase mb-2" style="color:#0BA9C2;">Why it matters</p>
+          <h3 class="text-2xl font-bold mb-2">A network that works for members</h3>
+          <p style="color:#504b78;">
+            As the network grows, more value stays inside the cooperative and can support members through better tools and future programs.
+          </p>
         </div>
       </div>
     </section>
@@ -216,14 +349,30 @@
               <p><strong style="color:#231F56;">No fragmented stack.</strong> Storefront, booking, invoicing, referrals, and payments can live in one place.</p>
             </div>
           </div>
+
           <div class="card p-8">
             <p class="ibm text-sm font-bold uppercase mb-3" style="color:#0BA9C2;">What members will get</p>
             <div class="space-y-4">
-              <div><strong>Own storefront</strong><br><span class="small">Sell Time Credits and digital goods directly.</span></div>
-              <div><strong>Booking and calendar</strong><br><span class="small">Make prepaid scheduling easy.</span></div>
-              <div><strong>Affiliate growth tools</strong><br><span class="small">Turn referrals into revenue.</span></div>
-              <div><strong>Paisley ID</strong><br><span class="small">A portable identity tied to your work and reputation.</span></div>
-              <div><strong>Member ownership</strong><br><span class="small">A real cooperative structure designed to benefit the people using it.</span></div>
+              <div>
+                <strong>Own storefront</strong><br>
+                <span class="small">Sell Time Credits and digital goods directly.</span>
+              </div>
+              <div>
+                <strong>Booking and calendar</strong><br>
+                <span class="small">Make prepaid scheduling easy.</span>
+              </div>
+              <div>
+                <strong>Affiliate growth tools</strong><br>
+                <span class="small">Turn referrals into revenue.</span>
+              </div>
+              <div>
+                <strong>Paisley ID</strong><br>
+                <span class="small">A portable identity tied to your work and reputation.</span>
+              </div>
+              <div>
+                <strong>Member ownership</strong><br>
+                <span class="small">A real cooperative structure designed to benefit the people using it.</span>
+              </div>
             </div>
           </div>
         </div>
@@ -235,51 +384,111 @@
         <div class="card p-8">
           <p class="ibm text-sm font-bold uppercase mb-2" style="color:#0BA9C2;">Early traction</p>
           <h2 class="text-4xl font-extrabold mb-4">The network started forming before launch</h2>
-          <p class="text-lg mb-5" style="color:#504b78;">Paisley ambassadors are already emerging in Japan, Pakistan, the EU, Ghana, Nigeria, Bolivia, Lithuania, Cameroon, India, Vietnam, and across the United States.</p>
-          <p class="small">Interest is building before the public launch, while the product stack is being finalized.</p>
+          <p class="text-lg mb-5" style="color:#504b78;">
+            Paisley ambassadors are already emerging in Japan, Pakistan, the EU, Ghana, Nigeria, Bolivia, Lithuania, Cameroon, India, Vietnam, and across the United States.
+          </p>
+          <p class="small">
+            Interest is building before public launch while the product stack is being finalized.
+          </p>
         </div>
+
         <div class="card p-8">
           <p class="ibm text-sm font-bold uppercase mb-2" style="color:#0BA9C2;">Why this matters</p>
           <h2 class="text-4xl font-extrabold mb-4">Stop waiting to get paid</h2>
-          <p class="text-lg mb-5" style="color:#504b78;">Freelancers lose time and income waiting for payments. Paisley flips that model so you can get paid first and work on your own terms.</p>
-          <p class="small">Built for freelancers who want control over their income.</p>
+          <p class="text-lg mb-5" style="color:#504b78;">
+            Freelancers lose time and income waiting for payments. Paisley flips that model so you can get paid first and work on your own terms.
+          </p>
+          <p class="small">Built for freelancers who want more control over their income.</p>
         </div>
       </div>
     </section>
 
     <section class="py-16" style="background:#231F56;">
       <div class="shell px-4 lg:px-8 text-center">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Be first to get paid upfront</h2>
-        <p class="text-xl text-white/85 max-w-3xl mx-auto mb-8">Be first to mint Time Credits, claim your identity, and help launch a payment network designed for freelancers.</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">
+          Be first to get paid upfront
+        </h2>
+        <p class="text-xl text-white/85 max-w-3xl mx-auto mb-8">
+          Join the early access list and be among the first freelancers to mint Time Credits, claim your identity, and launch with Paisley.
+        </p>
+
         <form id="bottom-form" class="max-w-3xl mx-auto grid md:grid-cols-[1fr_1fr_1fr_auto] gap-3">
           <input name="name" type="text" class="email-input" placeholder="Name" required />
           <input name="email" type="email" class="email-input" placeholder="Email" required />
           <input name="country" type="text" class="email-input" placeholder="Country" />
           <button type="submit" class="btn-accent whitespace-nowrap">Get Access</button>
         </form>
+
         <div id="bottom-success" class="hidden mt-6 text-white">
           <p class="ibm font-bold text-xl mb-1">You're on the list.</p>
           <p class="text-white/75">We'll be in touch with early access details and launch updates.</p>
         </div>
-        <p class="mt-4 text-white/70 text-sm">We will send launch updates, early invites, and ambassador opportunities.</p>
+
+        <p class="mt-4 text-white/70 text-sm">
+          We will send launch updates, early invites, and ambassador opportunities.
+        </p>
       </div>
     </section>
 
     <section class="shell px-4 lg:px-8 py-16 faq">
       <div class="max-w-4xl mx-auto">
         <h2 class="text-4xl font-extrabold text-center mb-10">Frequently asked questions</h2>
+
         <div class="space-y-4">
           <details>
-            <summary>Is this just invoicing with new language?</summary>
-            <p>No. Invoicing gets you paid after delivery. Time Credits let a freelancer package work and get paid before delivery begins.</p>
+            <summary>What is Paisley?</summary>
+            <p>
+              Paisley is a platform that lets freelancers get paid before they work. Instead of waiting for invoices, you can sell your future time as Time Credits and receive income upfront.
+            </p>
           </details>
+
           <details>
-            <summary>Why does this fit freelancers so well?</summary>
-            <p>Freelancers already think in hours, retainers, and packages. Paisley turns that familiar structure into something that can be sold upfront.</p>
+            <summary>What are Time Credits?</summary>
+            <p>
+              Time Credits represent your future working hours. If you charge $75 per hour, you can mint hours in advance and sell them to clients who will redeem that time later.
+            </p>
           </details>
+
           <details>
-            <summary>What makes Paisley more than a payments app?</summary>
-            <p>Paisley is building a user-aligned network around payments, identity, reputation, and business tools for independent workers.</p>
+            <summary>Do I still have to do the work?</summary>
+            <p>
+              Yes. Time Credits are a commitment to deliver your work in the future. As clients redeem them, you complete the work and build your reputation.
+            </p>
+          </details>
+
+          <details>
+            <summary>Who is this for?</summary>
+            <p>
+              Freelancers and creators who sell their time: designers, developers, editors, coaches, consultants, and anyone working independently.
+            </p>
+          </details>
+
+          <details>
+            <summary>Why is this better than invoicing?</summary>
+            <p>
+              You get paid upfront instead of waiting 30 days. No chasing payments. No unpredictable cash flow.
+            </p>
+          </details>
+
+          <details>
+            <summary>What about platform fees?</summary>
+            <p>
+              Paisley is built as a user-owned network, not a traditional platform. The goal is to reduce fees and return more value to the people doing the work.
+            </p>
+          </details>
+
+          <details>
+            <summary>What happens if I do not deliver?</summary>
+            <p>
+              Your reputation is tied to delivery. Completing work builds trust and future demand. Failing to deliver reduces your ability to sell Time Credits.
+            </p>
+          </details>
+
+          <details>
+            <summary>When can I start?</summary>
+            <p>
+              We are preparing for launch now. Join early access and be among the first to mint Time Credits and get paid upfront.
+            </p>
           </details>
         </div>
       </div>
@@ -300,12 +509,12 @@
     async function submitForm(formEl, successEl) {
       const data = {};
       new FormData(formEl).forEach((v, k) => data[k] = v);
-      // default role for bottom form
+
       if (!data.role) data.role = 'Freelancer';
 
       const btn = formEl.querySelector('button[type="submit"]');
       btn.disabled = true;
-      btn.textContent = 'Submitting…';
+      btn.textContent = 'Submitting...';
 
       try {
         const res = await fetch('/api/submit', {
@@ -313,6 +522,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
+
         if (res.ok) {
           formEl.classList.add('hidden');
           successEl.classList.remove('hidden');
