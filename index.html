@@ -266,11 +266,19 @@
               <input id="country" name="country" type="text" class="email-input" placeholder="Your country" />
             </div>
 
+            <div>
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input id="ambassador" name="ambassador" type="checkbox" value="yes" class="w-5 h-5 rounded accent-[#0BA9C2] cursor-pointer" />
+                <span class="ibm text-sm font-semibold" style="color:#231F56;">Interested in being a country ambassador?</span>
+              </label>
+            </div>
+
             <button type="submit" class="btn-accent w-full text-lg">Join Early Access</button>
             <p class="text-center text-sm mt-2" style="color:#6A54A3;">No spam. Just launch updates and early access.</p>
           </form>
 
           <div id="main-success" class="hidden mt-4 p-4 rounded-2xl text-center" style="background:rgba(11,169,194,.08);">
+            <div class="text-3xl mb-2">✓</div>
             <p class="ibm font-bold text-lg mb-1" style="color:#231F56;">You're on the list.</p>
             <p class="small">We'll be in touch with early access details and launch updates.</p>
           </div>
@@ -508,7 +516,8 @@
     async function submitForm(formEl, successEl) {
       const data = {};
       new FormData(formEl).forEach((v, k) => data[k] = v);
-
+      // checkboxes only appear in FormData when checked — default to 'no'
+      if (!data.ambassador) data.ambassador = 'no';
       if (!data.role) data.role = 'Freelancer';
 
       const btn = formEl.querySelector('button[type="submit"]');

@@ -16,19 +16,22 @@ export default async function handler(req, res) {
 
     await sql`
       CREATE TABLE IF NOT EXISTS paisley_leads (
-        id        SERIAL PRIMARY KEY,
-        name      TEXT,
-        email     TEXT NOT NULL,
-        role      TEXT,
-        country   TEXT,
-        source    TEXT DEFAULT 'early-access',
-        created_at TIMESTAMPTZ DEFAULT NOW()
+        id          SERIAL PRIMARY KEY,
+        name        TEXT,
+        email       TEXT NOT NULL,
+        role        TEXT,
+        country     TEXT,
+        ambassador  TEXT DEFAULT 'no',
+        source      TEXT DEFAULT 'early-access',
+        created_at  TIMESTAMPTZ DEFAULT NOW()
       )
     `;
 
+    const { name, email, role, country, ambassador } = req.body;
+
     await sql`
-      INSERT INTO paisley_leads (name, email, role, country)
-      VALUES (${name || null}, ${email}, ${role || null}, ${country || null})
+      INSERT INTO paisley_leads (name, email, role, country, ambassador)
+      VALUES (${name || null}, ${email}, ${role || null}, ${country || null}, ${ambassador || 'no'})
     `;
 
     return res.status(200).json({ success: true });
