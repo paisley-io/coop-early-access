@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = neon(process.env.paisley_coop_DATABASE_URL);
 
     await sql`
       CREATE TABLE IF NOT EXISTS paisley_leads (
