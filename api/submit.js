@@ -15,12 +15,12 @@ export default async function handler(req, res) {
   const sql = neon(process.env.paisley_coop_DATABASE_URL);
 
   try {
-    // Ensure table exists with UNIQUE constraint on email
+    // Ensure table exists (original schema — no UNIQUE constraint to avoid breaking existing data)
     await sql`
       CREATE TABLE IF NOT EXISTS paisley_leads (
         id          SERIAL PRIMARY KEY,
         name        TEXT,
-        email       TEXT NOT NULL UNIQUE,
+        email       TEXT NOT NULL,
         role        TEXT,
         country     TEXT,
         ambassador  TEXT DEFAULT 'no',
@@ -29,23 +29,18 @@ export default async function handler(req, res) {
       )
     `;
 
-    // Add UNIQUE constraint if table already existed without it
-    await sql`
-      DO $$ BEGIN
-        ALTER TABLE paisley_leads ADD CONSTRAINT paisley_leads_email_unique UNIQUE (email);
-      EXCEPTION WHEN duplicate_table OR duplicate_object THEN NULL;
-      END $$
+    // Check for existing signup manually (safe with or without duplicate data)
+    const existing = await sql`
+      SELECT id FROM paisley_leads WHERE email = ${email} LIMIT 1
     `;
+    const isNew = existing.length === 0;
 
-    // Insert — skip silently if already registered
-    const result = await sql`
-      INSERT INTO paisley_leads (name, email, role, country, ambassador)
-      VALUES (${name || null}, ${email}, ${role || null}, ${country || null}, ${ambassador || 'no'})
-      ON CONFLICT (email) DO NOTHING
-      RETURNING id
-    `;
-
-    const isNew = result.length > 0;
+    if (isNew) {
+      await sql`
+        INSERT INTO paisley_leads (name, email, role, country, ambassador)
+        VALUES (${name || null}, ${email}, ${role || null}, ${country || null}, ${ambassador || 'no'})
+      `;
+    }
 
     // Send emails via Resend (only for new signups)
     if (isNew && process.env.RESEND_API_KEY) {
