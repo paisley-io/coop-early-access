@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paisley Admin — Affiliates</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paisley-primary: #231F56;
+      --paisley-accent: #CAD22C;
+      --paisley-teal: #0BA9C2;
+      --paisley-subtext: #6A54A3;
+      --paisley-soft: #F9F9FB;
+    }
+    body { font-family: 'Source Sans Pro', sans-serif; color: var(--paisley-primary); background: var(--paisley-soft); margin: 0; }
+    h1,h2,h3,h4,button,.ibm { font-family: 'IBM Plex Sans', sans-serif; }
+    .card { background: #fff; border: 1px solid #ececf4; border-radius: 1.25rem; box-shadow: 0 4px 16px rgba(35,31,86,.06); padding: 1.5rem; margin-bottom: 1.5rem; }
+    .stat-card { background: #fff; border: 1px solid #ececf4; border-radius: 1rem; padding: 1.25rem 1.5rem; }
+    .btn { border-radius: 999px; padding: .6rem 1.25rem; font-weight: 700; font-family: 'IBM Plex Sans', sans-serif; font-size: .88rem; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: .4rem; }
+    .btn-accent { background: var(--paisley-accent); color: var(--paisley-primary); }
+    .btn-primary { background: var(--paisley-primary); color: #fff; }
+    .btn-sm { padding: .4rem .9rem; font-size: .8rem; }
+    .btn:hover { opacity: .88; }
+    .field { border: 2px solid #e8e8f2; border-radius: .6rem; padding: .65rem 1rem; font-size: .9rem; width: 100%; }
+    .field:focus { outline: none; border-color: var(--paisley-teal); }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--paisley-subtext); font-weight: 700; padding: .5rem .75rem; border-bottom: 2px solid #f0f0f8; }
+    td { padding: .7rem .75rem; font-size: .88rem; border-bottom: 1px solid #f5f5fb; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafafe; }
+    .pill-active { display:inline-block;background:rgba(11,169,194,.12);color:#0a6e7a;border-radius:999px;padding:.2rem .7rem;font-size:.75rem;font-weight:700; }
+    .pill-paused { display:inline-block;background:#f5f5f5;color:#999;border-radius:999px;padding:.2rem .7rem;font-size:.75rem;font-weight:700; }
+    .modal-bg { position:fixed;inset:0;background:rgba(35,31,86,.5);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem; }
+    .modal { background:#fff;border-radius:1.25rem;padding:2rem;max-width:440px;width:100%; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav style="background:#231F56;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:1.5rem;">
+      <img src="../assets/logos/paisley-logo-white.svg" alt="Paisley" height="26"
+        onerror="this.outerHTML='<span style=&quot;color:#CAD22C;font-family:IBM Plex Sans,sans-serif;font-weight:700;&quot;>Paisley</span>'" />
+      <span style="color:rgba(255,255,255,.5);font-size:.85rem;">Admin — Affiliates</span>
+    </div>
+    <a href="../" style="color:#CAD22C;font-size:.85rem;font-family:'IBM Plex Sans',sans-serif;font-weight:600;text-decoration:none;">← Site</a>
+  </nav>
+
+  <!-- Auth gate -->
+  <div id="gate" style="min-height:85vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
+    <div style="max-width:380px;width:100%;text-align:center;">
+      <h1 style="font-size:1.5rem;margin:0 0 .5rem;">Admin Access</h1>
+      <p style="color:var(--paisley-subtext);margin:0 0 1.5rem;font-size:.95rem;">Enter your admin secret to continue.</p>
+      <div style="display:flex;gap:.75rem;">
+        <input id="secret-input" type="password" class="field" placeholder="Admin secret" />
+        <button onclick="authenticate()" class="btn btn-accent ibm" style="white-space:nowrap;">Enter →</button>
+      </div>
+      <p id="auth-error" style="display:none;color:#c0392b;font-size:.88rem;margin-top:.75rem;"></p>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <main id="dashboard" style="display:none;max-width:1100px;margin:0 auto;padding:2rem;">
+
+    <!-- Summary stats -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;">
+      <div class="stat-card">
+        <p style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--paisley-subtext);margin:0 0 .3rem;">Total Members</p>
+        <p id="stat-members" style="font-size:2rem;font-weight:700;margin:0;"></p>
+      </div>
+      <div class="stat-card">
+        <p style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--paisley-subtext);margin:0 0 .3rem;">Pending PAI Owed</p>
+        <p id="stat-pai" style="font-size:2rem;font-weight:700;margin:0;"></p>
+        <p style="font-size:.75rem;color:var(--paisley-subtext);margin:.2rem 0 0;">settles at launch</p>
+      </div>
+      <div class="stat-card">
+        <p style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--paisley-subtext);margin:0 0 .3rem;">Active Programs</p>
+        <p id="stat-programs" style="font-size:2rem;font-weight:700;margin:0;"></p>
+      </div>
+    </div>
+
+    <!-- Programs -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;">Programs</h2>
+        <button onclick="openCreateProgram()" class="btn btn-accent ibm btn-sm">+ Create Program</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Owner</th>
+              <th>Parent</th>
+              <th>Members</th>
+              <th>Budget Cap (PAI)</th>
+              <th>Rewards Owed</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="programs-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Members -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
+        <h2 style="font-size:1rem;font-weight:700;margin:0;">Members (<span id="members-count">0</span>)</h2>
+        <input id="members-search" type="text" class="field" placeholder="Search by name or email…" style="width:220px;border-radius:999px;padding:.5rem 1rem;font-size:.85rem;" oninput="filterMembers()" />
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Referred by</th>
+              <th>Referrals</th>
+              <th>Pending PAI</th>
+              <th>Joined</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="members-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Create Program Modal -->
+  <div id="create-modal" style="display:none;" class="modal-bg" onclick="if(event.target===this)this.style.display='none'">
+    <div class="modal">
+      <h2 style="font-size:1.1rem;font-weight:700;margin:0 0 1.25rem;">Create Program</h2>
+      <div style="display:flex;flex-direction:column;gap:.85rem;">
+        <div>
+          <label style="font-size:.8rem;font-weight:700;display:block;margin-bottom:.3rem;">Program Name</label>
+          <input id="prog-name" type="text" class="field" placeholder="e.g. Alice's Freelance Network" />
+        </div>
+        <div>
+          <label style="font-size:.8rem;font-weight:700;display:block;margin-bottom:.3rem;">Owner Email</label>
+          <input id="prog-owner" type="email" class="field" placeholder="owner@example.com" />
+        </div>
+        <div>
+          <label style="font-size:.8rem;font-weight:700;display:block;margin-bottom:.3rem;">Parent Program</label>
+          <select id="prog-parent" class="field" style="border-radius:.6rem;"></select>
+        </div>
+        <div>
+          <label style="font-size:.8rem;font-weight:700;display:block;margin-bottom:.3rem;">Budget Cap (PAI) — 0 = no cap until launch</label>
+          <input id="prog-budget" type="number" class="field" placeholder="0" value="0" min="0" />
+        </div>
+        <div style="display:flex;gap:.75rem;margin-top:.5rem;">
+          <button onclick="createProgram()" class="btn btn-accent ibm" style="flex:1;">Create Program</button>
+          <button onclick="document.getElementById('create-modal').style.display='none'" class="btn ibm" style="background:#f0f0f8;color:#231F56;">Cancel</button>
+        </div>
+        <p id="prog-error" style="display:none;color:#c0392b;font-size:.85rem;margin:0;"></p>
+        <p id="prog-success" style="display:none;color:#0a6e7a;font-size:.85rem;margin:0;"></p>
+      </div>
+    </div>
+  </div>
+
+<script>
+let ADMIN_SECRET = '';
+let allMembers = [];
+
+async function authenticate() {
+  const secret = document.getElementById('secret-input').value.trim();
+  const errEl = document.getElementById('auth-error');
+  errEl.style.display = 'none';
+
+  const res = await fetch('/api/affiliates/admin', {
+    headers: { 'x-admin-secret': secret },
+  });
+
+  if (res.status === 401) {
+    errEl.textContent = 'Invalid secret.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (!res.ok) {
+    errEl.textContent = 'Server error — make sure the schema has been set up.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  ADMIN_SECRET = secret;
+  const data = await res.json();
+  renderDashboard(data);
+}
+
+function renderDashboard(data) {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+
+  document.getElementById('stat-members').textContent = data.summary.total_members.toLocaleString();
+  document.getElementById('stat-pai').textContent = data.summary.total_pending_pai > 0
+    ? data.summary.total_pending_pai.toLocaleString() + ' PAI' : '0 PAI';
+  document.getElementById('stat-programs').textContent = data.programs.filter(p => p.active).length;
+
+  // Programs table
+  const ptbody = document.getElementById('programs-tbody');
+  ptbody.innerHTML = data.programs.map(p => `
+    <tr>
+      <td style="font-family:monospace;font-size:.82rem;color:var(--paisley-subtext);">${p.id}</td>
+      <td style="font-weight:600;">${p.name}</td>
+      <td>${p.owner_email}</td>
+      <td style="color:var(--paisley-subtext);font-size:.82rem;">${p.parent_id || '—'}</td>
+      <td>${p.member_count}</td>
+      <td>${p.budget_cap > 0 ? Number(p.budget_cap).toLocaleString() : '<span style="color:#aaa;">none</span>'}</td>
+      <td>${p.total_rewards_owed > 0 ? Number(p.total_rewards_owed).toLocaleString() + ' PAI' : '<span style="color:#aaa;">0</span>'}</td>
+      <td><span class="${p.active ? 'pill-active' : 'pill-paused'}">${p.active ? 'Active' : 'Paused'}</span></td>
+    </tr>
+  `).join('');
+
+  // Populate parent dropdown for create modal
+  const sel = document.getElementById('prog-parent');
+  sel.innerHTML = data.programs.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+
+  // Members table
+  allMembers = data.members;
+  document.getElementById('members-count').textContent = allMembers.length;
+  renderMembers(allMembers);
+}
+
+function renderMembers(members) {
+  document.getElementById('members-tbody').innerHTML = members.map(m => `
+    <tr>
+      <td style="font-weight:600;">${m.name || '<span style="color:#bbb;">—</span>'}</td>
+      <td style="font-family:monospace;font-size:.82rem;">${m.email}</td>
+      <td style="font-size:.82rem;color:var(--paisley-subtext);">${m.referrer || 'Direct'}</td>
+      <td>${m.referral_count}</td>
+      <td>${m.pending_reward > 0 ? m.pending_reward.toLocaleString() + ' PAI' : '<span style="color:#aaa;">0</span>'}</td>
+      <td style="color:var(--paisley-subtext);font-size:.82rem;">${new Date(m.joined).toLocaleDateString()}</td>
+      <td>
+        <a href="/affiliates?email=${encodeURIComponent(m.email)}" target="_blank"
+          style="font-size:.78rem;color:var(--paisley-teal);font-weight:600;text-decoration:none;">View →</a>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filterMembers() {
+  const q = document.getElementById('members-search').value.toLowerCase();
+  renderMembers(allMembers.filter(m =>
+    (m.name || '').toLowerCase().includes(q) || m.email.toLowerCase().includes(q)
+  ));
+}
+
+function openCreateProgram() {
+  document.getElementById('prog-error').style.display = 'none';
+  document.getElementById('prog-success').style.display = 'none';
+  document.getElementById('create-modal').style.display = 'flex';
+}
+
+async function createProgram() {
+  const name = document.getElementById('prog-name').value.trim();
+  const owner_email = document.getElementById('prog-owner').value.trim();
+  const parent_id = document.getElementById('prog-parent').value;
+  const budget_cap = Number(document.getElementById('prog-budget').value) || 0;
+  const errEl = document.getElementById('prog-error');
+  const sucEl = document.getElementById('prog-success');
+  errEl.style.display = 'none';
+  sucEl.style.display = 'none';
+
+  if (!name || !owner_email) {
+    errEl.textContent = 'Name and owner email are required.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const res = await fetch('/api/affiliates/create-program', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-admin-secret': ADMIN_SECRET },
+    body: JSON.stringify({ name, owner_email, parent_id, budget_cap }),
+  });
+  const data = await res.json();
+
+  if (!res.ok) {
+    errEl.textContent = data.error || 'Failed to create program.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  sucEl.textContent = `Program created: ${data.program_id}`;
+  sucEl.style.display = 'block';
+  document.getElementById('prog-name').value = '';
+  document.getElementById('prog-owner').value = '';
+
+  // Reload data
+  setTimeout(async () => {
+    const r = await fetch('/api/affiliates/admin', { headers: { 'x-admin-secret': ADMIN_SECRET } });
+    if (r.ok) renderDashboard(await r.json());
+    document.getElementById('create-modal').style.display = 'none';
+  }, 1200);
+}
+</script>
+</body>
+</html>

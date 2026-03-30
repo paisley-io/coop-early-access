@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Paisley Co-op</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logos/favicon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paisley-primary: #231F56;
+      --paisley-accent: #CAD22C;
+      --paisley-teal: #0BA9C2;
+      --paisley-subtext: #6A54A3;
+      --paisley-soft: #F9F9FB;
+    }
+    body { font-family: 'Source Sans Pro', sans-serif; color: var(--paisley-primary); background: #fff; }
+    h1,h2,h3,h4,button,.ibm { font-family: 'IBM Plex Sans', sans-serif; }
+    .field {
+      border: 2px solid #e8e8f2; border-radius: 999px;
+      padding: .9rem 1.2rem; font-size: 1rem; width: 100%;
+    }
+    .field:focus { outline: none; border-color: var(--paisley-teal); box-shadow: 0 0 0 4px rgba(11,169,194,.12); }
+    .btn-accent {
+      background: var(--paisley-accent); color: var(--paisley-primary);
+      border-radius: 999px; padding: 1rem 1.6rem; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center; width: 100%;
+    }
+    .btn-accent:hover { opacity: .92; }
+    .card { background: #fff; border: 1px solid #ececf4; border-radius: 1.25rem; box-shadow: 0 12px 30px rgba(35,31,86,.07); }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav style="background:#231F56;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" style="text-decoration:none;">
+      <img src="assets/logos/paisley-logo-white.svg" alt="Paisley" height="30"
+        onerror="this.outerHTML='<span style=&quot;color:#CAD22C;font-family:IBM Plex Sans,sans-serif;font-weight:700;font-size:1.2rem;&quot;>Paisley</span>'" />
+    </a>
+    <a href="/" style="color:#CAD22C;font-size:.9rem;font-family:'IBM Plex Sans',sans-serif;font-weight:600;text-decoration:none;">
+      Learn more →
+    </a>
+  </nav>
+
+  <main style="min-height:90vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--paisley-soft);">
+    <div style="max-width:460px;width:100%;">
+
+      <!-- Referrer badge -->
+      <div id="referrer-badge" style="display:none;margin-bottom:1.5rem;text-align:center;">
+        <span style="display:inline-block;background:rgba(11,169,194,.10);color:var(--paisley-primary);border-radius:999px;padding:.5rem 1.2rem;font-size:.95rem;font-family:'IBM Plex Sans',sans-serif;font-weight:600;">
+          ✦ Invited by <span id="referrer-name"></span>
+        </span>
+      </div>
+
+      <!-- Card -->
+      <div class="card" style="padding:2.5rem;">
+        <h1 style="font-size:1.7rem;font-weight:700;margin:0 0 .5rem;color:#231F56;">Join Paisley Co-op</h1>
+        <p style="color:var(--paisley-subtext);margin:0 0 1.75rem;font-size:1rem;line-height:1.5;">
+          Get paid before you work. Join the waitlist for first wallet access and launch rewards.
+        </p>
+
+        <!-- Form -->
+        <form id="join-form" style="display:flex;flex-direction:column;gap:1rem;">
+          <input id="name" type="text" class="field" placeholder="Your name" required />
+          <input id="email" type="email" class="field" placeholder="your@email.com" required />
+          <button type="submit" class="btn-accent ibm">Join Paisley →</button>
+        </form>
+
+        <!-- Already member -->
+        <div id="already-msg" style="display:none;margin-top:1rem;text-align:center;">
+          <p style="color:var(--paisley-subtext);font-size:.95rem;margin:0 0 .75rem;">
+            You're already a member! <a id="dash-link" href="#" style="color:var(--paisley-teal);font-weight:600;">View your dashboard →</a>
+          </p>
+        </div>
+
+        <!-- Success -->
+        <div id="success-msg" style="display:none;text-align:center;padding:1rem 0;">
+          <div style="font-size:2.5rem;margin-bottom:.75rem;">🎉</div>
+          <h2 style="font-size:1.3rem;font-weight:700;margin:0 0 .5rem;">You're in!</h2>
+          <p style="color:var(--paisley-subtext);margin:0 0 1.25rem;font-size:.95rem;">
+            Check your email — we've sent your referral link and membership confirmation.
+          </p>
+          <a id="my-link-btn" href="#" class="btn-accent ibm" style="font-size:.95rem;text-decoration:none;margin-bottom:.75rem;">
+            Share your referral link
+          </a>
+          <p style="margin:.75rem 0 0;font-size:.85rem;color:var(--paisley-subtext);">
+            Your link: <span id="my-link-text" style="color:var(--paisley-teal);word-break:break-all;"></span>
+          </p>
+        </div>
+
+        <!-- Error -->
+        <div id="error-msg" style="display:none;margin-top:1rem;padding:.75rem 1rem;background:#fff0f0;border-radius:.75rem;color:#c0392b;font-size:.9rem;"></div>
+      </div>
+
+      <p style="text-align:center;margin-top:1.5rem;font-size:.85rem;color:var(--paisley-subtext);">
+        Paisley is a worker-owned cooperative. No fees. No platform tax.
+      </p>
+    </div>
+  </main>
+
+<script>
+(function() {
+  const params = new URLSearchParams(location.search);
+  const code = params.get('code');
+
+  // Show referrer context if code present
+  if (code) {
+    document.getElementById('referrer-badge').style.display = 'block';
+    document.getElementById('referrer-name').textContent = 'a Paisley member';
+  }
+
+  document.getElementById('join-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const errEl = document.getElementById('error-msg');
+    errEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Joining…';
+
+    try {
+      let data, ok;
+
+      if (code) {
+        // Referral join
+        const res = await fetch('/api/affiliates/redeem', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, name, email }),
+        });
+        data = await res.json();
+        ok = res.ok;
+      } else {
+        // Direct join — falls through to early-access list
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email }),
+        });
+        data = await res.json();
+        ok = res.ok;
+      }
+
+      if (!ok) throw new Error(data.error || 'Something went wrong');
+
+      if (data.already_member) {
+        document.getElementById('join-form').style.display = 'none';
+        document.getElementById('already-msg').style.display = 'block';
+        document.getElementById('dash-link').href = `/affiliates?email=${encodeURIComponent(email)}`;
+        return;
+      }
+
+      // Success
+      document.getElementById('join-form').style.display = 'none';
+      const successEl = document.getElementById('success-msg');
+      successEl.style.display = 'block';
+
+      if (data.code) {
+        const myLink = `https://paisley.coop/ref?code=${data.code}`;
+        document.getElementById('my-link-text').textContent = myLink;
+        document.getElementById('my-link-btn').href = `/affiliates?email=${encodeURIComponent(email)}`;
+        document.getElementById('my-link-btn').textContent = 'View your dashboard →';
+      }
+
+    } catch (err) {
+      errEl.textContent = err.message;
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Join Paisley →';
+    }
+  });
+})();
+</script>
+</body>
+</html>

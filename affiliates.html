@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paisley — My Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logos/favicon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paisley-primary: #231F56;
+      --paisley-accent: #CAD22C;
+      --paisley-teal: #0BA9C2;
+      --paisley-subtext: #6A54A3;
+      --paisley-soft: #F9F9FB;
+    }
+    body { font-family: 'Source Sans Pro', sans-serif; color: var(--paisley-primary); background: var(--paisley-soft); margin: 0; }
+    h1,h2,h3,h4,button,.ibm { font-family: 'IBM Plex Sans', sans-serif; }
+    .card { background: #fff; border: 1px solid #ececf4; border-radius: 1.25rem; box-shadow: 0 4px 16px rgba(35,31,86,.06); padding: 1.5rem; }
+    .stat-card { background: #fff; border: 1px solid #ececf4; border-radius: 1rem; padding: 1.25rem 1.5rem; }
+    .btn { border-radius: 999px; padding: .7rem 1.4rem; font-weight: 700; font-family: 'IBM Plex Sans', sans-serif; font-size: .9rem; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: .4rem; }
+    .btn-accent { background: var(--paisley-accent); color: var(--paisley-primary); }
+    .btn-outline { background: transparent; border: 2px solid var(--paisley-teal); color: var(--paisley-teal); }
+    .btn:hover { opacity: .88; }
+    .field { border: 2px solid #e8e8f2; border-radius: 999px; padding: .75rem 1.1rem; font-size: .95rem; width: 100%; }
+    .field:focus { outline: none; border-color: var(--paisley-teal); box-shadow: 0 0 0 4px rgba(11,169,194,.12); }
+    .badge { display: inline-block; border-radius: 999px; padding: .3rem .75rem; font-size: .78rem; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; }
+    .badge-pending { background: rgba(202,210,44,.15); color: #7a7e00; }
+    .badge-paid { background: rgba(11,169,194,.12); color: #0a6e7a; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--paisley-subtext); font-weight: 700; padding: .5rem .75rem; border-bottom: 1px solid #f0f0f8; }
+    td { padding: .75rem; font-size: .9rem; border-bottom: 1px solid #f8f8fc; }
+    tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav style="background:#231F56;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" style="text-decoration:none;">
+      <img src="assets/logos/paisley-logo-white.svg" alt="Paisley" height="28"
+        onerror="this.outerHTML='<span style=&quot;color:#CAD22C;font-family:IBM Plex Sans,sans-serif;font-weight:700;font-size:1.1rem;&quot;>Paisley</span>'" />
+    </a>
+    <span id="nav-email" style="color:rgba(255,255,255,.6);font-size:.85rem;"></span>
+  </nav>
+
+  <!-- Lookup gate (shown until email confirmed) -->
+  <div id="gate" style="min-height:85vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
+    <div style="max-width:420px;width:100%;text-align:center;">
+      <h1 style="font-size:1.6rem;font-weight:700;margin:0 0 .5rem;">Your Affiliate Dashboard</h1>
+      <p style="color:var(--paisley-subtext);margin:0 0 1.75rem;">Enter the email you used to join Paisley.</p>
+      <div style="display:flex;gap:.75rem;">
+        <input id="gate-email" type="email" class="field" placeholder="you@example.com" />
+        <button onclick="loadDashboard()" class="btn btn-accent ibm" style="white-space:nowrap;">View →</button>
+      </div>
+      <p id="gate-error" style="display:none;color:#c0392b;font-size:.88rem;margin-top:.75rem;"></p>
+    </div>
+  </div>
+
+  <!-- Dashboard (hidden until loaded) -->
+  <main id="dashboard" style="display:none;max-width:900px;margin:0 auto;padding:2rem;">
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <h1 id="dash-name" style="font-size:1.5rem;font-weight:700;margin:0 0 .2rem;"></h1>
+        <p id="dash-joined" style="color:var(--paisley-subtext);font-size:.9rem;margin:0;"></p>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;">
+      <div class="stat-card">
+        <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--paisley-subtext);margin:0 0 .4rem;">Referrals</p>
+        <p id="stat-referrals" style="font-size:2rem;font-weight:700;margin:0;color:#231F56;">—</p>
+      </div>
+      <div class="stat-card">
+        <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--paisley-subtext);margin:0 0 .4rem;">Pending PAI</p>
+        <p id="stat-pending" style="font-size:2rem;font-weight:700;margin:0;color:#231F56;">—</p>
+        <p style="font-size:.75rem;color:var(--paisley-subtext);margin:.2rem 0 0;">credited at launch</p>
+      </div>
+      <div class="stat-card">
+        <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--paisley-subtext);margin:0 0 .4rem;">Total Earned</p>
+        <p id="stat-total" style="font-size:2rem;font-weight:700;margin:0;color:#231F56;">—</p>
+      </div>
+    </div>
+
+    <!-- Referral link -->
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h2 style="font-size:1rem;font-weight:700;margin:0 0 .75rem;">Your Referral Link</h2>
+      <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
+        <input id="my-link" type="text" class="field" readonly style="cursor:pointer;color:var(--paisley-teal);font-size:.9rem;" />
+        <button onclick="copyLink()" class="btn btn-accent ibm">Copy</button>
+        <button onclick="shareLink()" class="btn btn-outline ibm">Share</button>
+      </div>
+      <p style="font-size:.82rem;color:var(--paisley-subtext);margin:.75rem 0 0;">
+        Everyone who joins through your link earns you PAI rewards when the token launches.
+      </p>
+    </div>
+
+    <!-- Referrals table -->
+    <div class="card">
+      <h2 style="font-size:1rem;font-weight:700;margin:0 0 1rem;">People You've Referred (<span id="ref-count">0</span>)</h2>
+      <div id="ref-empty" style="display:none;text-align:center;padding:2rem 0;">
+        <p style="color:var(--paisley-subtext);margin:0 0 1rem;font-size:.95rem;">No referrals yet. Share your link to start earning.</p>
+        <button onclick="copyLink()" class="btn btn-accent ibm">Copy your link</button>
+      </div>
+      <div id="ref-table-wrap" style="overflow-x:auto;">
+        <table id="ref-table">
+          <thead>
+            <tr>
+              <th>Name / Email</th>
+              <th>Joined</th>
+              <th>PAI Reward</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ref-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+<script>
+(function() {
+  // Auto-load from URL param
+  const params = new URLSearchParams(location.search);
+  const emailParam = params.get('email');
+  if (emailParam) {
+    document.getElementById('gate-email').value = emailParam;
+    loadDashboard();
+  }
+})();
+
+async function loadDashboard() {
+  const email = document.getElementById('gate-email').value.trim();
+  const errEl = document.getElementById('gate-error');
+  errEl.style.display = 'none';
+  if (!email) return;
+
+  try {
+    const res = await fetch(`/api/affiliates/dashboard?email=${encodeURIComponent(email)}`);
+    if (res.status === 404) {
+      errEl.textContent = "We don't have a record of that email. Did you sign up via a referral link?";
+      errEl.style.display = 'block';
+      return;
+    }
+    if (!res.ok) throw new Error('Something went wrong');
+    const d = await res.json();
+    renderDashboard(d, email);
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.style.display = 'block';
+  }
+}
+
+function renderDashboard(d, email) {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('nav-email').textContent = email;
+
+  document.getElementById('dash-name').textContent = d.member.name || email;
+  document.getElementById('dash-joined').textContent =
+    'Member since ' + new Date(d.member.joined).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  document.getElementById('stat-referrals').textContent = d.stats.total_referrals;
+  document.getElementById('stat-pending').textContent = d.stats.pending_reward > 0
+    ? d.stats.pending_reward.toLocaleString() + ' PAI'
+    : '0 PAI';
+  document.getElementById('stat-total').textContent = d.stats.total_reward > 0
+    ? d.stats.total_reward.toLocaleString() + ' PAI'
+    : '0 PAI';
+
+  // Referral link
+  const code = d.codes[0];
+  if (code) {
+    document.getElementById('my-link').value = code.link;
+  } else {
+    document.getElementById('my-link').value = 'Generating your link…';
+    fetch('/api/affiliates/generate-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    }).then(r => r.json()).then(data => {
+      if (data.link) document.getElementById('my-link').value = data.link;
+    });
+  }
+
+  // Referrals table
+  document.getElementById('ref-count').textContent = d.referrals.length;
+  if (d.referrals.length === 0) {
+    document.getElementById('ref-empty').style.display = 'block';
+    document.getElementById('ref-table-wrap').style.display = 'none';
+  } else {
+    const tbody = document.getElementById('ref-tbody');
+    tbody.innerHTML = d.referrals.map(r => `
+      <tr>
+        <td style="font-weight:600;">${r.name || r.email}</td>
+        <td style="color:var(--paisley-subtext);">${new Date(r.joined).toLocaleDateString()}</td>
+        <td>${r.reward > 0 ? r.reward.toLocaleString() + ' PAI' : '<span style="color:#aaa;">pending launch</span>'}</td>
+        <td><span class="badge badge-${r.status}">${r.status}</span></td>
+      </tr>
+    `).join('');
+  }
+}
+
+function copyLink() {
+  const link = document.getElementById('my-link').value;
+  navigator.clipboard.writeText(link).then(() => {
+    const btn = event.target;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1800);
+  });
+}
+
+function shareLink() {
+  const link = document.getElementById('my-link').value;
+  if (navigator.share) {
+    navigator.share({ title: 'Join Paisley Co-op', url: link });
+  } else {
+    copyLink();
+  }
+}
+</script>
+</body>
+</html>
