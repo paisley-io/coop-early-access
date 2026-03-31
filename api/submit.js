@@ -6,10 +6,31 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, role, country, ambassador } = req.body;
+  const { name, email, role, country, ambassador, website } = req.body;
+
+  // Honeypot — bots fill hidden fields, humans don't
+  if (website) return res.status(200).json({ success: true });
 
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
+  }
+
+  // Reject obviously malformed emails
+  if (email.startsWith('www.') || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Please enter a valid email address' });
+  }
+
+  // Reject random-string names (bots): low vowel ratio in long strings
+  if (name && name.length > 8 && !name.includes(' ')) {
+    const vowels = (name.match(/[aeiouAEIOU]/g) || []).length;
+    if (vowels / name.length < 0.2) {
+      return res.status(200).json({ success: true }); // silent reject
+    }
+  }
+
+  // Reject random-string countries
+  if (country && country.length > 50) {
+    return res.status(200).json({ success: true }); // silent reject
   }
 
   const sql = neon(process.env.paisley_coop_DATABASE_URL);

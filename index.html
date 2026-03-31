@@ -239,6 +239,10 @@
           </p>
 
           <form id="main-form" class="space-y-4">
+            <!-- Honeypot: hidden from humans, bots fill it -->
+            <div style="position:absolute;left:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+              <input name="website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
             <div>
               <label class="block ibm text-sm font-semibold mb-2" for="name">Name</label>
               <input id="name" name="name" type="text" class="email-input" placeholder="Your name" required />
@@ -421,6 +425,10 @@
         </p>
 
         <form id="bottom-form" class="max-w-3xl mx-auto grid md:grid-cols-[1fr_1fr_1fr_auto] gap-3">
+          <!-- Honeypot -->
+          <div style="position:absolute;left:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+            <input name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
           <input name="name" type="text" class="email-input" placeholder="Name" required />
           <input name="email" type="email" class="email-input" placeholder="Email" required />
           <input name="country" type="text" class="email-input" placeholder="Country" />
