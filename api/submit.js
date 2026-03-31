@@ -50,7 +50,7 @@ export default async function handler(req, res) {
       )
     `;
 
-    // Check for existing signup manually (safe with or without duplicate data)
+    // Check for existing lead and existing affiliate member separately
     const existing = await sql`
       SELECT id FROM paisley_leads WHERE email = ${email} LIMIT 1
     `;
@@ -61,8 +61,15 @@ export default async function handler(req, res) {
         INSERT INTO paisley_leads (name, email, role, country, ambassador)
         VALUES (${name || null}, ${email}, ${role || null}, ${country || null}, ${ambassador || 'no'})
       `;
+    }
 
-      // Create affiliate member record (everyone on early-access is auto-affiliate)
+    // Affiliate enrollment — runs for new AND existing leads who aren't enrolled yet
+    const existingMember = await sql`
+      SELECT email FROM aff_members WHERE email = ${email} LIMIT 1
+    `;
+    const isNewMember = existingMember.length === 0;
+
+    if (isNewMember) {
       await sql`
         INSERT INTO aff_members (email, name)
         VALUES (${email}, ${name || null})
@@ -73,7 +80,6 @@ export default async function handler(req, res) {
         VALUES (${email}, 'paisley-root')
         ON CONFLICT DO NOTHING
       `;
-      // Generate their invite code
       const code = nanoid(8);
       await sql`
         INSERT INTO aff_invite_codes (code, referrer, program_id)
@@ -82,8 +88,8 @@ export default async function handler(req, res) {
       `;
     }
 
-    // Send emails via Resend (only for new signups)
-    if (isNew && process.env.RESEND_API_KEY) {
+    // Send emails via Resend (new lead OR existing lead newly enrolled as affiliate)
+    if ((isNew || isNewMember) && process.env.RESEND_API_KEY) {
       const resend = new Resend(process.env.RESEND_API_KEY);
       const firstName = name ? name.split(' ')[0] : 'there';
 
