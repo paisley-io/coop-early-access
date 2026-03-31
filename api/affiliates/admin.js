@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       COALESCE(SUM(r.reward), 0) AS pending_reward
     FROM aff_members m
     LEFT JOIN aff_referrals r ON r.referrer = m.email AND r.status = 'pending'
-    GROUP BY m.email, m.name, m.referrer, m.created_at
+    GROUP BY m.id, m.email, m.name, m.referrer, m.created_at
     ORDER BY m.created_at DESC
   `;
 
