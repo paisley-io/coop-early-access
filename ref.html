@@ -159,10 +159,13 @@
       successEl.style.display = 'block';
 
       if (data.code) {
-        const myLink = `https://paisley.coop/ref?code=${data.code}`;
+        const myLink = `${window.location.origin}/ref.html?code=${data.code}`;
         document.getElementById('my-link-text').textContent = myLink;
-        document.getElementById('my-link-btn').href = `/affiliates?email=${encodeURIComponent(email)}`;
-        document.getElementById('my-link-btn').textContent = 'View your dashboard →';
+        const dashBtn = document.getElementById('my-link-btn');
+        dashBtn.href = `/affiliates.html?email=${encodeURIComponent(email)}`;
+        dashBtn.textContent = 'View your dashboard →';
+        dashBtn.style.pointerEvents = 'auto';
+        dashBtn.style.opacity = '1';
       }
 
     } catch (err) {

@@ -122,8 +122,11 @@ export default async function handler(req, res) {
       });
     }
 
-    // Return same success whether new or duplicate — no confusing errors for users
-    return res.status(200).json({ success: true, new: isNew });
+    // Return code so the UI can display the referral link immediately
+    const [codeResult] = await sql`
+      SELECT code FROM aff_invite_codes WHERE referrer = ${email} LIMIT 1
+    `;
+    return res.status(200).json({ success: true, new: isNew, code: codeResult?.code || null });
 
   } catch (err) {
     console.error('Submit error:', err);
