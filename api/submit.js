@@ -61,6 +61,25 @@ export default async function handler(req, res) {
         INSERT INTO paisley_leads (name, email, role, country, ambassador)
         VALUES (${name || null}, ${email}, ${role || null}, ${country || null}, ${ambassador || 'no'})
       `;
+
+      // Create affiliate member record (everyone on early-access is auto-affiliate)
+      await sql`
+        INSERT INTO aff_members (email, name)
+        VALUES (${email}, ${name || null})
+        ON CONFLICT (email) DO NOTHING
+      `;
+      await sql`
+        INSERT INTO aff_member_programs (member_email, program_id)
+        VALUES (${email}, 'paisley-root')
+        ON CONFLICT DO NOTHING
+      `;
+      // Generate their invite code
+      const code = nanoid(8);
+      await sql`
+        INSERT INTO aff_invite_codes (code, referrer, program_id)
+        VALUES (${code}, ${email}, 'paisley-root')
+        ON CONFLICT DO NOTHING
+      `;
     }
 
     // Send emails via Resend (only for new signups)
@@ -68,12 +87,18 @@ export default async function handler(req, res) {
       const resend = new Resend(process.env.RESEND_API_KEY);
       const firstName = name ? name.split(' ')[0] : 'there';
 
+      // Get their invite code for the confirmation email
+      const [codeRow] = await sql`
+        SELECT code FROM aff_invite_codes WHERE referrer = ${email} LIMIT 1
+      `;
+      const myLink = codeRow ? `https://paisley.coop/ref?code=${codeRow.code}` : null;
+
       // Confirmation to user
       await resend.emails.send({
         from: 'Paisley <hello@paisley.coop>',
         to: email,
         subject: "You're on the Paisley early access list",
-        html: confirmationEmail(firstName, ambassador === 'yes'),
+        html: confirmationEmail(firstName, ambassador === 'yes', myLink),
       });
 
       // Notification to Rich
@@ -100,7 +125,14 @@ export default async function handler(req, res) {
   }
 }
 
-function confirmationEmail(firstName, isAmbassador) {
+function nanoid(len = 8) {
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let id = '';
+  for (let i = 0; i < len; i++) id += chars[Math.floor(Math.random() * chars.length)];
+  return id;
+}
+
+function confirmationEmail(firstName, isAmbassador, myLink) {
   return `
 <!DOCTYPE html>
 <html>
@@ -151,7 +183,14 @@ function confirmationEmail(firstName, isAmbassador) {
               We'll keep you posted as we get closer to launch.
             </p>
 
-            <a href="https://paisley.coop" style="display:inline-block;background:#CAD22C;color:#231F56;font-family:'IBM Plex Sans',Arial,sans-serif;font-weight:700;font-size:15px;padding:14px 28px;border-radius:8px;text-decoration:none;">
+            ${myLink ? `
+            <div style="background:#F9F9FB;border-radius:8px;padding:20px 24px;margin-bottom:24px;">
+              <p style="font-family:'IBM Plex Sans',Arial,sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#6A54A3;margin:0 0 8px;">Your referral link</p>
+              <p style="font-size:13px;color:#0BA9C2;margin:0 0 12px;word-break:break-all;">${myLink}</p>
+              <a href="${myLink}" style="display:inline-block;background:#CAD22C;color:#231F56;font-family:'IBM Plex Sans',Arial,sans-serif;font-weight:700;font-size:14px;padding:10px 20px;border-radius:8px;text-decoration:none;">Share your link →</a>
+            </div>` : ''}
+
+            <a href="https://paisley.coop" style="display:inline-block;background:#231F56;color:#fff;font-family:'IBM Plex Sans',Arial,sans-serif;font-weight:700;font-size:15px;padding:14px 28px;border-radius:8px;text-decoration:none;">
               Learn more about Paisley →
             </a>
           </td>
