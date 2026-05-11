@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paisley Ambassadors — What Is an Ambassador?</title>
+  <meta name="description" content="Paisley Ambassadors are community builders who help freelancers in their region discover cooperative work. Learn what it means, what you do, and what you earn." />
+  <link rel="icon" type="image/svg+xml" href="assets/logos/favicon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paisley-primary: #231F56;
+      --paisley-accent: #CAD22C;
+      --paisley-teal: #0BA9C2;
+      --paisley-subtext: #6A54A3;
+      --paisley-soft: #F9F9FB;
+    }
+    body { font-family: 'Source Sans Pro', sans-serif; color: var(--paisley-primary); background: #fff; margin: 0; }
+    h1,h2,h3,h4,button,nav,.ibm { font-family: 'IBM Plex Sans', sans-serif; }
+    .shell { max-width: 1100px; margin: 0 auto; }
+    .card { background: #fff; border: 1px solid #ececf4; border-radius: 1.25rem; box-shadow: 0 12px 30px rgba(35,31,86,.07); }
+    .soft-card { background: var(--paisley-soft); border: 1px solid #ececf4; border-radius: 1.25rem; }
+    .pill { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; padding: .45rem .85rem; background: rgba(11,169,194,.08); color: var(--paisley-primary); font-weight: 600; font-size: .9rem; font-family: 'IBM Plex Sans', sans-serif; }
+    .btn-accent { background: var(--paisley-accent); color: var(--paisley-primary); border-radius: 999px; padding: 1rem 1.75rem; font-weight: 700; display: inline-flex; align-items: center; font-family: 'IBM Plex Sans', sans-serif; text-decoration: none; font-size: 1rem; }
+    .btn-accent:hover { opacity: .9; }
+    .btn-outline { color: var(--paisley-teal); border: 2px solid var(--paisley-teal); border-radius: 999px; padding: .9rem 1.6rem; font-weight: 700; display: inline-flex; align-items: center; font-family: 'IBM Plex Sans', sans-serif; text-decoration: none; background: transparent; font-size: 1rem; }
+    .btn-outline:hover { background: rgba(11,169,194,.06); }
+    .activity-icon { width: 2.5rem; height: 2.5rem; border-radius: .75rem; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; flex-shrink: 0; background: rgba(11,169,194,.10); }
+    .tier-badge { display: inline-block; border-radius: 999px; padding: .35rem .9rem; font-size: .78rem; font-weight: 700; font-family: 'IBM Plex Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+    @media (max-width: 768px) {
+      .two-col { grid-template-columns: 1fr !important; }
+      .tier-row { flex-direction: column !important; gap: .75rem !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav style="background:#231F56; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between;">
+    <a href="/" style="text-decoration:none;">
+      <img src="assets/logos/paisley-wordmark.svg" alt="Paisley" height="32"
+        onerror="this.outerHTML='<span style=&quot;color:#CAD22C;font-family:IBM Plex Sans,sans-serif;font-weight:700;font-size:1.2rem;&quot;>Paisley</span>'" />
+    </a>
+    <div style="display:flex; align-items:center; gap:1.25rem;">
+      <a href="/" style="color:rgba(255,255,255,.65); font-size:.9rem; font-family:'IBM Plex Sans',sans-serif; font-weight:600; text-decoration:none;">← Back</a>
+      <a href="/#early-access" style="background:var(--paisley-accent); color:var(--paisley-primary); border-radius:999px; padding:.6rem 1.25rem; font-weight:700; font-size:.88rem; font-family:'IBM Plex Sans',sans-serif; text-decoration:none;">Join Early Access</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section style="padding:4rem 2rem 3rem; background:linear-gradient(150deg, #f0f0f8 0%, #fff 65%);">
+    <div class="shell" style="max-width:740px; text-align:center;">
+      <div class="pill" style="margin-bottom:1.5rem;">Ambassador Program</div>
+      <h1 style="font-size:clamp(2rem,5vw,3.25rem); font-weight:800; line-height:1.15; margin:0 0 1.25rem; color:#231F56;">
+        What is a Paisley Ambassador?
+      </h1>
+      <p style="font-size:1.2rem; color:#504b78; line-height:1.75; margin:0 auto 2rem; max-width:600px;">
+        An ambassador is a Paisley member who takes on a community role — helping freelancers in their region discover cooperative work, and earning PAI tokens for real contributions.
+      </p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="/#early-access" class="btn-accent">Join as an Ambassador</a>
+        <a href="#what-you-do" class="btn-outline">See what's involved ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The short answer -->
+  <section id="what-you-do" style="padding:3.5rem 2rem; background:#fff;">
+    <div class="shell" style="max-width:900px;">
+      <div style="text-align:center; margin-bottom:2.75rem;">
+        <h2 style="font-size:1.9rem; font-weight:800; margin:0 0 .6rem;">How does it apply to me?</h2>
+        <p style="color:var(--paisley-subtext); font-size:1.05rem; max-width:520px; margin:0 auto; line-height:1.65;">
+          Ambassadors do the things platforms can't — build trust in their community, explain the model in their own language, and help people who are ready to make a change.
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.25rem;">
+
+        <div class="soft-card" style="padding:1.5rem; display:flex; gap:1rem; align-items:flex-start;">
+          <div class="activity-icon">🤝</div>
+          <div>
+            <p style="font-weight:700; margin:0 0 .3rem; font-family:'IBM Plex Sans',sans-serif;">Welcome new members</p>
+            <p style="color:#504b78; font-size:.92rem; margin:0; line-height:1.55;">Help freelancers in your area get started. Answer questions, share your experience, make the first steps easier.</p>
+          </div>
+        </div>
+
+        <div class="soft-card" style="padding:1.5rem; display:flex; gap:1rem; align-items:flex-start;">
+          <div class="activity-icon">🌍</div>
+          <div>
+            <p style="font-weight:700; margin:0 0 .3rem; font-family:'IBM Plex Sans',sans-serif;">Represent your region</p>
+            <p style="color:#504b78; font-size:.92rem; margin:0; line-height:1.55;">Translate content, organize local conversations, or run a regional group. Be the voice Paisley doesn't have on the ground yet.</p>
+          </div>
+        </div>
+
+        <div class="soft-card" style="padding:1.5rem; display:flex; gap:1rem; align-items:flex-start;">
+          <div class="activity-icon">✍️</div>
+          <div>
+            <p style="font-weight:700; margin:0 0 .3rem; font-family:'IBM Plex Sans',sans-serif;">Create and share</p>
+            <p style="color:#504b78; font-size:.92rem; margin:0; line-height:1.55;">Write about your experience, record a video, explain the model to your audience. Your story reaches people we can't reach alone.</p>
+          </div>
+        </div>
+
+        <div class="soft-card" style="padding:1.5rem; display:flex; gap:1rem; align-items:flex-start;">
+          <div class="activity-icon">📣</div>
+          <div>
+            <p style="font-weight:700; margin:0 0 .3rem; font-family:'IBM Plex Sans',sans-serif;">Grow through referrals</p>
+            <p style="color:#504b78; font-size:.92rem; margin:0; line-height:1.55;">Share your referral link. When the people you bring in succeed, you earn PAI tokens that reflect your contribution to the network.</p>
+          </div>
+        </div>
+
+        <div class="soft-card" style="padding:1.5rem; display:flex; gap:1rem; align-items:flex-start;">
+          <div class="activity-icon">💬</div>
+          <div>
+            <p style="font-weight:700; margin:0 0 .3rem; font-family:'IBM Plex Sans',sans-serif;">Shape the product</p>
+            <p style="color:#504b78; font-size:.92rem; margin:0; line-height:1.55;">Early ambassadors get direct access to the team. Your feedback on what works — and what doesn't — directly influences what gets built.</p>
+          </div>
+        </div>
+
+        <div class="soft-card" style="padding:1.5rem; display:flex; gap:1rem; align-items:flex-start;">
+          <div class="activity-icon">🏘️</div>
+          <div>
+            <p style="font-weight:700; margin:0 0 .3rem; font-family:'IBM Plex Sans',sans-serif;">Organize locally</p>
+            <p style="color:#504b78; font-size:.92rem; margin:0; line-height:1.55;">Run a meetup, a WhatsApp group, a Discord, or a Telegram community for freelancers in your country or city.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- What you earn -->
+  <section style="padding:3.5rem 2rem; background:var(--paisley-soft);">
+    <div class="shell" style="max-width:900px;">
+      <div style="text-align:center; margin-bottom:2.5rem;">
+        <h2 style="font-size:1.9rem; font-weight:800; margin:0 0 .6rem;">What you earn</h2>
+        <p style="color:var(--paisley-subtext); font-size:1.05rem; max-width:520px; margin:0 auto; line-height:1.65;">
+          PAI tokens reward real contributions — not just how many people you sign up. The more you help the ecosystem, the more you earn.
+        </p>
+      </div>
+
+      <div class="card" style="overflow:hidden;">
+        <table style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:2px solid #ececf4;">
+              <th style="text-align:left; padding:.75rem 1.25rem; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--paisley-subtext); font-family:'IBM Plex Sans',sans-serif;">Activity</th>
+              <th style="text-align:left; padding:.75rem 1.25rem; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--paisley-subtext); font-family:'IBM Plex Sans',sans-serif;">Reward</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #f0f0f8;">
+              <td style="padding:.9rem 1.25rem; font-size:.95rem;">Successful referral — new member joins</td>
+              <td style="padding:.9rem 1.25rem; font-size:.95rem; font-weight:700; color:#0BA9C2; font-family:'IBM Plex Sans',sans-serif;">PAI tokens</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f8;">
+              <td style="padding:.9rem 1.25rem; font-size:.95rem;">Content creation (post, video, guide)</td>
+              <td style="padding:.9rem 1.25rem; font-size:.95rem; font-weight:700; color:#0BA9C2; font-family:'IBM Plex Sans',sans-serif;">PAI tokens</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f8;">
+              <td style="padding:.9rem 1.25rem; font-size:.95rem;">Translation of Paisley materials</td>
+              <td style="padding:.9rem 1.25rem; font-size:.95rem; font-weight:700; color:#0BA9C2; font-family:'IBM Plex Sans',sans-serif;">PAI tokens</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f8;">
+              <td style="padding:.9rem 1.25rem; font-size:.95rem;">Regional community organizing</td>
+              <td style="padding:.9rem 1.25rem; font-size:.95rem; font-weight:700; color:#0BA9C2; font-family:'IBM Plex Sans',sans-serif;">PAI tokens</td>
+            </tr>
+            <tr>
+              <td style="padding:.9rem 1.25rem; font-size:.95rem;">Onboarding and peer support</td>
+              <td style="padding:.9rem 1.25rem; font-size:.95rem; font-weight:700; color:#0BA9C2; font-family:'IBM Plex Sans',sans-serif;">PAI tokens</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin:1.25rem 1.25rem; font-size:.88rem; color:var(--paisley-subtext); line-height:1.65; border-top:1px solid #f0f0f8; padding-top:1rem;">
+          PAI token amounts are set at launch. Accumulating PAI does not grant extra votes — Paisley governance remains one member, one vote. PAI is a reward for contribution, not a power structure.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tiers -->
+  <section style="padding:3.5rem 2rem; background:#fff;">
+    <div class="shell" style="max-width:900px;">
+      <div style="text-align:center; margin-bottom:2.5rem;">
+        <h2 style="font-size:1.9rem; font-weight:800; margin:0 0 .6rem;">How ambassadors are recognized</h2>
+        <p style="color:var(--paisley-subtext); font-size:1.05rem; max-width:540px; margin:0 auto; line-height:1.65;">
+          Four levels reflect increasing contribution and responsibility. You move up by doing the work, not by recruiting volume alone.
+        </p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+
+        <div class="card" style="padding:1.5rem 2rem; display:flex; align-items:flex-start; gap:1.5rem;" class="tier-row">
+          <div style="min-width:120px; padding-top:.15rem;">
+            <span class="tier-badge" style="background:rgba(202,210,44,.2); color:#5a6000;">Pathfinder</span>
+          </div>
+          <div>
+            <p style="font-weight:700; font-family:'IBM Plex Sans',sans-serif; margin:0 0 .35rem; font-size:1.05rem; color:#231F56;">Getting started</p>
+            <p style="color:#504b78; margin:0; font-size:.95rem; line-height:1.6;">You've joined as an ambassador and made your first contributions — referrals, early feedback, or introducing Paisley in your community. Every ambassador begins here.</p>
+          </div>
+        </div>
+
+        <div class="card" style="padding:1.5rem 2rem; display:flex; align-items:flex-start; gap:1.5rem;" class="tier-row">
+          <div style="min-width:120px; padding-top:.15rem;">
+            <span class="tier-badge" style="background:rgba(11,169,194,.12); color:#0a6e7a;">Steward</span>
+          </div>
+          <div>
+            <p style="font-weight:700; font-family:'IBM Plex Sans',sans-serif; margin:0 0 .35rem; font-size:1.05rem; color:#231F56;">Active contributor</p>
+            <p style="color:#504b78; margin:0; font-size:.95rem; line-height:1.6;">A consistent presence in your local community. You're regularly helping new members, answering questions, and creating content or translations that serve your region.</p>
+          </div>
+        </div>
+
+        <div class="card" style="padding:1.5rem 2rem; display:flex; align-items:flex-start; gap:1.5rem;" class="tier-row">
+          <div style="min-width:120px; padding-top:.15rem;">
+            <span class="tier-badge" style="background:rgba(35,31,86,.10); color:#231F56;">Envoy</span>
+          </div>
+          <div>
+            <p style="font-weight:700; font-family:'IBM Plex Sans',sans-serif; margin:0 0 .35rem; font-size:1.05rem; color:#231F56;">Regional leader</p>
+            <p style="color:#504b78; margin:0; font-size:.95rem; line-height:1.6;">You're running something — a regional community, a translation effort, a recurring event. You're the person other members in your area look to for guidance.</p>
+          </div>
+        </div>
+
+        <div class="card" style="padding:1.5rem 2rem; display:flex; align-items:flex-start; gap:1.5rem; border-left:4px solid var(--paisley-accent);" class="tier-row">
+          <div style="min-width:120px; padding-top:.15rem;">
+            <span class="tier-badge" style="background:#231F56; color:#CAD22C;">Vanguard</span>
+          </div>
+          <div>
+            <p style="font-weight:700; font-family:'IBM Plex Sans',sans-serif; margin:0 0 .35rem; font-size:1.05rem; color:#231F56;">Ecosystem builder</p>
+            <p style="color:#504b78; margin:0; font-size:.95rem; line-height:1.6;">You helped build this. Sustained, significant impact on Paisley's growth and community health. Vanguard ambassadors are recognized as founding contributors to the cooperative.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section style="padding:3.5rem 2rem; background:var(--paisley-soft);">
+    <div class="shell" style="max-width:900px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:center;" class="two-col">
+        <div>
+          <h2 style="font-size:1.9rem; font-weight:800; margin:0 0 1rem;">Not just for freelancers</h2>
+          <p style="color:#504b78; font-size:1.05rem; line-height:1.7; margin:0 0 1rem;">
+            Ambassadors are anyone who believes in cooperative models and has a community to bring along with them.
+          </p>
+          <p style="color:#504b78; font-size:1.05rem; line-height:1.7; margin:0;">
+            If you run a freelancer community, teach independent work, organize in your city, or simply have the trust of people who need what Paisley offers — this program is designed for you.
+          </p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:.85rem;">
+          <div style="display:flex; align-items:center; gap:.9rem; background:#fff; border:1px solid #ececf4; border-radius:1rem; padding:1rem 1.25rem;">
+            <span style="font-size:1.2rem; flex-shrink:0;">💻</span>
+            <span style="font-weight:600; font-family:'IBM Plex Sans',sans-serif; font-size:.95rem;">Freelancers and independent workers</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:.9rem; background:#fff; border:1px solid #ececf4; border-radius:1rem; padding:1rem 1.25rem;">
+            <span style="font-size:1.2rem; flex-shrink:0;">🏘️</span>
+            <span style="font-weight:600; font-family:'IBM Plex Sans',sans-serif; font-size:.95rem;">Community organizers and leaders</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:.9rem; background:#fff; border:1px solid #ececf4; border-radius:1rem; padding:1rem 1.25rem;">
+            <span style="font-size:1.2rem; flex-shrink:0;">🎓</span>
+            <span style="font-weight:600; font-family:'IBM Plex Sans',sans-serif; font-size:.95rem;">Educators and content creators</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:.9rem; background:#fff; border:1px solid #ececf4; border-radius:1rem; padding:1rem 1.25rem;">
+            <span style="font-size:1.2rem; flex-shrink:0;">⚙️</span>
+            <span style="font-weight:600; font-family:'IBM Plex Sans',sans-serif; font-size:.95rem;">Developers and builders who care</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:4rem 2rem; background:#231F56; text-align:center;">
+    <div class="shell" style="max-width:640px;">
+      <h2 style="color:#fff; font-size:2.25rem; font-weight:800; margin:0 0 1rem; line-height:1.2;">Ready to become an ambassador?</h2>
+      <p style="color:rgba(255,255,255,.8); font-size:1.1rem; margin:0 auto 2rem; line-height:1.7; max-width:520px;">
+        Join the early access list and check the ambassador box. We'll follow up with next steps when your region is ready to activate.
+      </p>
+      <a href="/#early-access" class="btn-accent" style="font-size:1.05rem; padding:1.1rem 2rem;">Join as an Ambassador →</a>
+      <p style="color:rgba(255,255,255,.45); font-size:.88rem; margin-top:1.25rem;">
+        Already on the list? Reply to your confirmation email and let us know you want to be an ambassador.
+      </p>
+    </div>
+  </section>
+
+  <footer style="padding:1.5rem 2rem; text-align:center; background:#f4f4f8; border-top:1px solid #ececf4;">
+    <p style="color:var(--paisley-subtext); font-size:.85rem; margin:0;">
+      Paisley is a worker-owned cooperative. <a href="/" style="color:var(--paisley-teal); text-decoration:none;">← Back to home</a>
+    </p>
+  </footer>
+
+</body>
+</html>
