@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
     await sql`
       INSERT INTO paisley_leads (name, email, role, country, ambassador)
-      VALUES (${name || null}, ${email}, ${role || null}, ${country || null}, ${ambassador || 'no'})
+      VALUES (${name || null}, ${email}, ${role || null}, ${country || null}, 'no')
     `;
 
     return res.status(200).json({ success: true });
